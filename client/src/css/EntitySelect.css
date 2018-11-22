@@ -1,0 +1,50 @@
+.entity-select ul {
+    position: absolute;
+    z-index: 101;
+    left: 0;
+    right: 0;
+    width: 85%;
+    max-width: 600px;
+    background-color: var(--primary);
+    color: var(--text);
+    border-radius: 5px;
+    margin: 5px auto;
+    box-shadow: 0 3px 10px var(--shadow);
+    list-style-type: none;
+    padding: 0;
+    border-bottom: 4px solid var(--secondary);
+    transition: opacity .2s ease;
+    opacity: 1;
+}
+
+.multi-select ul {
+    background-color: var(--primary);
+    color: var(--text);
+    border-radius: 5px;
+    margin: 5px auto 15px;
+    box-shadow: 0 3px 10px var(--shadow);
+    list-style-type: none;
+    padding: 0;
+    border-bottom: 4px solid var(--secondary);
+}
+
+.entity-select ul.hidden, .multi-select ul.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.multi-select ul.hidden {
+    margin-bottom: 0;
+}
+
+.entity-select li, .multi-select li {
+    padding: 10px 15px;
+}
+
+.entity-select li:hover, .multi-select li:hover {
+    background-color: var(--secondary);
+}
+
+.entity-select input.selected {
+    border-color: #81e81c;
+}

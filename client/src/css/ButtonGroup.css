@@ -1,0 +1,22 @@
+.button-group {
+    text-align: center;
+    display: flex;
+}
+
+.button-group .btn {
+    background-color: initial;
+    color: var(--highlight);
+    border: 2px solid var(--highlight);
+}
+
+.button-group a {
+    text-decoration: none;
+    flex-grow: 1;
+    margin: 0 5px;
+}
+
+.button-group .btn:hover, .button-group .btn.active {
+    background-color: #fff;
+    transform: scale(1.03);
+    filter: blur(0);
+}

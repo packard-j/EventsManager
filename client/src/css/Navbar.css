@@ -1,0 +1,40 @@
+.navbar {
+    padding: 20px 30px;
+    background-color: var(--primary);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .navbar-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.navbar .navbar-brand {
+    flex-grow: 1;
+}
+
+.navbar a {
+    text-decoration: none;
+}
+
+.navbar-brand a {
+    color: var(--text);
+}
+
+.navbar-brand a:hover {
+    color: var(--light);
+}
+
+.navbar .navbar-links {
+    flex-grow: 0;
+}
+
+.navbar-links a {
+    font-weight: 600;
+    color: var(--highlight);
+    margin-left: 20px;
+}

@@ -1,0 +1,145 @@
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--dark);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 100;
+  min-width: 300px;
+}
+
+body, input, textarea {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+}
+
+.container {
+  max-width: 750px;
+  margin: auto;
+  padding: 20px 30px;
+}
+
+.btn {
+  background-color: var(--light);
+  border: solid var(--highlight-dark);
+  border-width: 0 0 4px 0;
+  color: var(--dark);
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  box-shadow: 0 3px 10px var(--shadow);
+  transition: all .4s ease;
+}
+
+.btn.btn-small {
+  display: inline-block;
+  max-width: 100px;
+}
+
+.btn:disabled {
+  background-color: var(--disabled);
+  border-color: var(--light-secondary);
+  color: var(--text-secondary);
+  transition: all .4s ease
+}
+
+.btn-primary:not([disabled]) {
+  background-color: var(--highlight);
+  color: var(--text-secondary);
+}
+
+.btn-primary:hover:not([disabled]) {
+  background-color: var(--highlight-dark);
+  border-color: var(--highlight-darker);
+}
+
+.btn-danger:not([disabled]) {
+  background-color: #ff6023;
+  color: var(--text-secondary);
+  border-color: #cb5221;
+}
+
+.btn-danger:hover:not([disabled]) {
+  background-color: #e15622;
+  border-color: #ad491d
+}
+
+.btn-secondary:not([disabled]) {
+  background-color: #6ed11c;
+  color: var(--text-secondary);
+  border-color: #5bb41b;
+}
+
+.btn-secondary:hover:not([disabled]) {
+  background-color: #5baf19;
+  border-color: #3f8713;
+}
+
+.popup-form {
+  background-color: var(--secondary);
+  border-radius: 5px;
+  transform: translateX(-50%);
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  z-index: 100;
+  width: 90%;
+  max-width: 350px;
+  padding: 15px 30px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  transition: opacity .2s;
+  opacity: 1;
+}
+
+.popup-form.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+table {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--primary);
+  border-radius: 5px;
+  border-collapse: collapse;
+  margin: 20px auto;
+  border-bottom: 4px solid var(--secondary);
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--secondary);
+}
+
+td > p {
+  margin: 5px 0;
+}
+
+tbody.loading {
+  opacity: 0.9;
+}
+
+tbody > tr:hover {
+  background-color: var(--secondary);
+}
+
+.navlink {
+  text-decoration: none;
+  color: var(--highlight);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.float-right {
+  float: right;
+}

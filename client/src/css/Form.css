@@ -1,0 +1,34 @@
+.form, .assignment-list {
+    width: 100%;
+    margin: auto;
+}
+
+.assignment-list {
+    margin-top: 50px;
+}
+
+.form input[type=text], .form input[type=password],
+.form input[type=email], .form input[type=tel],
+.form input[type=number], .form textarea {
+    padding: 12px;
+    font-size: 16px;
+    background-color: var(--primary);
+    color: var(--text);
+    border: 2px solid var(--primary);
+    border-radius: 4px;
+    outline: none;
+    box-shadow: 0 3px 10px var(--shadow);
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    transition: border-color .3s ease;
+}
+
+.form input:focus, .form textarea:focus {
+    border: 2px solid var(--highlight);
+}
+
+.form-actions {
+    margin-top: 30px;
+}

@@ -1,0 +1,10 @@
+.form-group {
+    margin: 20px 0;
+}
+
+.form-label {
+    display: block;
+    margin: 10px 5px;
+    font-size: 12px;
+    color: var(--light);
+}
