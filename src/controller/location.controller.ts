@@ -114,7 +114,6 @@ export async function getLocations(request: Request, response: Response) {
         .take(pageLen)
         .getMany();
 
-    console.log(locations);
     response.send(locations);
 
 }

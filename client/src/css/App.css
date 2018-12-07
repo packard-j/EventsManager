@@ -36,6 +36,10 @@ h1, h2, h3 {
   transition: all .4s ease;
 }
 
+.btn:active {
+  transform: scale(0.98);
+}
+
 .btn.btn-small {
   display: inline-block;
   max-width: 100px;

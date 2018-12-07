@@ -27,7 +27,6 @@ export async function createVolunteer(request: Request, response: Response) {
         events = await eventRepo.findByIds(eventIds);
     }
 
-
     const newVolunteer = repo.create({
         firstName: firstName,
         lastName: lastName,
@@ -152,7 +151,6 @@ export async function getVolunteers(request: Request, response: Response) {
         .take(pageLen)
         .getMany();
 
-    console.log(volunteers);
     response.send(volunteers)
 
 }

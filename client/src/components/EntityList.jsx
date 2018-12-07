@@ -164,7 +164,7 @@ class EntityList extends Component {
                              close={this.hideCreateForm} callback={this.createFormCallback}/> :
             <CreateForm entity={this.props.entity} show={this.state.showCreateForm}
                         close={this.hideCreateForm} callback={this.createFormCallback}
-                        event={this.props.event} location={this.props.location}/>;
+                        event={this.props.event} location={this.props.location} volunteer={this.props.volunteer}/>;
         const body = this.mapEntities();
         const bodyClass = this.state.loading ? "loading" : "";
         return (

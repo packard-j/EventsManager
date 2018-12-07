@@ -2,6 +2,7 @@ import * as controller from "./controller";
 
 
 export const AppRoutes = [
+    // Volunteers
     {
         path: "/v",
         method: "post",
@@ -32,6 +33,7 @@ export const AppRoutes = [
         method: "post",
         action: controller.addVolunteersToEvent
     },
+    // Chocolate Bar Orders
     {
         path: "/cbo",
         method: "post",
@@ -57,6 +59,7 @@ export const AppRoutes = [
         method: "post",
         action: controller.deleteCbOrder
     },
+    // Locations
     {
         path: "/l",
         method: "post",
@@ -87,6 +90,7 @@ export const AppRoutes = [
         method: "post",
         action: controller.addLocationsToEvent
     },
+    // Assignments
     {
         path: "/a",
         method: "post",
@@ -112,6 +116,7 @@ export const AppRoutes = [
         method: "post",
         action: controller.deleteAssignment
     },
+    // Events
     {
         path: "/e",
         method: "post",

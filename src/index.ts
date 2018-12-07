@@ -8,7 +8,6 @@ import * as bodyParser from "body-parser";
 import * as path from "path";
 import {AppRoutes} from "./routes";
 import {setupPassport, ensureAuthenticated} from "./auth";
-import {createUser, listAssignments} from "./manage";
 
 
 createConnection().then(async connection => {
@@ -19,6 +18,7 @@ createConnection().then(async connection => {
     //app.use("/static", express.static(path.join(__dirname, "static")));
 
     app.use(session({
+        // CHANGE THE SECRET IN PRODUCTION
         secret: "changeme",
         genid: () => uuid.v4(),
         resave: false,
@@ -27,11 +27,7 @@ createConnection().then(async connection => {
 
     app.use(bodyParser.json());
 
-    // DEVELOPMENT
     app.use((req, res, next) => {
-        // Logging
-        console.log(req.method + ' ' + req.url);
-        // Headers
         res.header("Access-Control-Allow-Origin", "http://localhost:3000");
         res.header("Access-Control-Allow-Credentials", "true");
         res.header("Access-Control-Allow-Headers", "Origin,Content-Type, Authorization, x-id, Content-Length, X-Requested-With");
@@ -39,18 +35,18 @@ createConnection().then(async connection => {
         next();
     });
 
+    // Initialize authentication
     app = await setupPassport(app, connection);
 
+    // Map urls to controller functions
     AppRoutes.forEach(route => {
         app[route.method]("/api" + route.path, ensureAuthenticated, (request: Request, response: Response, next: Function) => {
             route.action(request, response).then(() => next).catch(err => next(err));
         });
     });
 
+    // Start server
     app.listen(3001);
     console.log("Application running at http://localhost:3001/");
-
-    //await createUser("james", "lotus");
-    console.log(await listAssignments(1));
 
 });

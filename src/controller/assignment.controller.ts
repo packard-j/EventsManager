@@ -10,7 +10,7 @@ export async function createAssignment(request: Request, response: Response) {
     const event = await eventRepo.findOne(request.body['event']);
 
     if (!event) {
-        response.status(404);
+        response.status(409);
         response.end();
         return;
     }
@@ -19,21 +19,15 @@ export async function createAssignment(request: Request, response: Response) {
     const location = await locationRepo.findOne(request.body['location']);
 
     if (!location) {
-        response.status(404);
+        response.status(409);
         response.end();
         return;
     }
-
-    console.log("Volunteers given:");
-    console.log(request.body['volunteers']);
 
     const volunteerRepo = getManager().getRepository(Volunteer);
     const volunteers = await volunteerRepo.createQueryBuilder("volunteer")
         .whereInIds(request.body['volunteers'])
         .getMany();
-
-    console.log("Volunteers selected:");
-    console.log(volunteers);
 
     if (volunteers.length === 0) {
         response.status(409);
@@ -61,7 +55,7 @@ export async function createAssignment(request: Request, response: Response) {
     }
     else {
         await repo.save(newAssignment);
-        console.log(newAssignment);
+        //console.log(newAssignment);
         response.send(newAssignment);
     }
 
@@ -83,7 +77,7 @@ export async function getAssignment(request: Request, response: Response) {
         return;
     }
 
-    console.log(assignment);
+    //console.log(assignment);
     response.send(assignment);
 
 }
@@ -107,7 +101,7 @@ export async function editAssignment(request: Request, response: Response) {
     const event = await eventRepo.findOne(request.body['event']);
 
     if (!event) {
-        response.status(404);
+        response.status(409);
         response.end();
         return;
     }
@@ -121,16 +115,10 @@ export async function editAssignment(request: Request, response: Response) {
         return;
     }
 
-    console.log("Volunteers given:");
-    console.log(request.body['volunteers']);
-
     const volunteerRepo = getManager().getRepository(Volunteer);
     const volunteers = await volunteerRepo.createQueryBuilder("volunteer")
         .whereInIds(request.body['volunteers'])
         .getMany();
-
-    console.log("Volunteers selected:");
-    console.log(volunteers);
 
     if (volunteers.length === 0) {
         response.status(409);
@@ -179,14 +167,18 @@ export async function deleteAssignment(request: Request, response: Response) {
 export async function getAssignments(request: Request, response: Response) {
 
     const repo = getManager().getRepository(Assignment);
+
+    const volunteer = request.body['volunteer'];
     let qb = repo.createQueryBuilder("assignment")
-        .leftJoinAndSelect("assignment.volunteers", "volunteer")
+        .leftJoin("assignment.event", "event")
+        .leftJoinAndSelect("assignment.volunteers", volunteer ? "volunteer" : "volunteers")
         .leftJoinAndSelect("assignment.location", "location");
 
     const event = request.body['event'];
     if (event) {
-        qb = qb.leftJoin("assignment.event", "event")
-            .where("event.id = :id", {id: event});
+        //console.log("FROM EVENT");
+        qb = qb.where("event.id = :id", {id: event});
+        //console.log(await qb.getMany())
     }
 
     const location = request.body['location'];
@@ -194,9 +186,9 @@ export async function getAssignments(request: Request, response: Response) {
         qb = qb.andWhere("location.id = :id", {id: location});
     }
 
-    const volunteer = request.body['volunteer'];
     if (volunteer) {
-        qb = qb.andWhere("volunteer.id = :id", {id: volunteer});
+        qb = qb.andWhere("volunteer.id = :id", {id: volunteer})
+            .leftJoinAndSelect("assignment.volunteers", "volunteers");
     }
 
     const search = request.body['search'];
@@ -204,8 +196,8 @@ export async function getAssignments(request: Request, response: Response) {
         qb = qb.andWhere("location.name like :n", {n: search + "%"});
     }
 
-    console.log("Getting assignments...");
-    console.log("event: " + event + ", volunteer: " + volunteer);
+    //console.log("Getting assignments...");
+    //console.log("event: " + event + ", volunteer: " + volunteer);
 
     const assignments = await qb
         .select([
@@ -216,15 +208,15 @@ export async function getAssignments(request: Request, response: Response) {
             "assignment.endHour",
             "assignment.endMinute",
             "location.name",
-            "volunteer.firstName",
-            "volunteer.lastName"
+            "volunteers.firstName",
+            "volunteers.lastName"
         ])
         .orderBy("assignment.zone", "ASC")
         .addOrderBy("assignment.startHour", "ASC")
         .addOrderBy("assignment.startMinute", "ASC")
         .getMany();
 
-    console.log(assignments);
+    //console.log(assignments);
     response.send(assignments);
 
 }

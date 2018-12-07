@@ -11,6 +11,7 @@ export async function setupPassport(server: Express, connection: Connection) {
 
     const repo = connection.getRepository(User);
 
+    // Set up local strategy with users in database
     passport.use("local", new LocalStrategy(
         async (username: string, password: string, done: Function) => {
             const user = await repo.findOne({'name': username});
@@ -29,10 +30,12 @@ export async function setupPassport(server: Express, connection: Connection) {
         }
     ));
 
+    // User --> id
     passport.serializeUser((user: User, done: Function) => {
         done(null, user.id);
     });
 
+    // id --> User
     passport.deserializeUser(async (id: number, done: Function) => {
         const user = await repo.findOne(id);
         if (user) {
@@ -43,12 +46,18 @@ export async function setupPassport(server: Express, connection: Connection) {
         }
     });
 
+    // Use the local strategy on the express server
     server.use(passport.initialize());
     server.use(passport.session());
 
+    // Authentication routes
+
+    /*
+    DEVELOPMENT ONLY
     server.post('/api/user', (request: Request, response: Response, next: Function) => {
         createUser(request, response).then(() => next).catch(err => next(err));
     });
+    */
 
     server.post("/api/login", (request: Request, response: Response, next: Function) => {
         passport.authenticate("local", (err, user: User, info) => {
@@ -56,12 +65,12 @@ export async function setupPassport(server: Express, connection: Connection) {
                 return next(err);
             }
             if (!user) {
-                console.log(request.body['username']);
+                //console.log(request.body['username']);
                 return response.status(401).send({'error': 'Invalid login'});
             }
             request.logIn(user, (err) => {
                 if (err) { return next(err); }
-                console.log(user.name + " signed in");
+                //console.log(user.name + " signed in");
                 response.send(user);
                 return next();
             });

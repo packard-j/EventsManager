@@ -25,14 +25,6 @@ export class Assignment {
     @Min(0)
     zone: number;
 
-    /*
-    @Column()
-    startTime: string;
-
-    @Column()
-    endTime: string;
-    */
-
     @Column()
     @IsInt()
     @Min(0)

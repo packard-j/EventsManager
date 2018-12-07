@@ -93,6 +93,7 @@ const fields = {
             <FormGroup label="Location">
             <EntitySelect entity="location" callback={id => form.setState({location: id})}/>
             </FormGroup>;
+        const volunteersLabel = form.props.volunteer ? "Other Volunteers" : "Volunteers";
         return (
             <div>
                 {eventSelect}
@@ -106,7 +107,7 @@ const fields = {
                 <FormGroup label="End Time">
                     <TimeInput callback={(hour, minute) => form.setState({endHour: hour, endMinute: minute})}/>
                 </FormGroup>
-                <FormGroup label="Volunteers">
+                <FormGroup label={volunteersLabel}>
                     <EntityMultiSelect entity="volunteer" callback={(volunteers) => form.setState({volunteers: volunteers})}/>
                 </FormGroup>
             </div>
@@ -142,6 +143,9 @@ class CreateForm extends Component {
             }
             if (this.props.location) {
                 s['location'] = this.props.location;
+            }
+            if (this.props.volunteer) {
+                s['volunteers'].push(this.props.volunteer);
             }
         }
         else if (this.props.event) {
