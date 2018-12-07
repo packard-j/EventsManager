@@ -1,6 +1,7 @@
-import {getManager} from "typeorm";
+import {createConnection, getManager} from "typeorm";
 import {Assignment, User} from "./entity";
 import * as bcrypt from 'bcrypt';
+import {create} from "domain";
 
 export async function createUser(username: string, password: string) {
     const repo = getManager().getRepository(User);
@@ -26,4 +27,11 @@ export async function listAssignments(location: number) {
         .leftJoinAndSelect("assignment.volunteers", "volunteer")
         .getMany();
 
+}
+
+if (!module.parent && process.argv[2] === 'create-user') {
+    createConnection().then(async connection => {
+        createUser(process.argv[3], process.argv[4])
+            .then(user => console.log(user));
+    });
 }

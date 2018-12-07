@@ -5,7 +5,6 @@ import * as express from "express";
 import * as session from "express-session";
 import * as uuid from "uuid";
 import * as bodyParser from "body-parser";
-import * as path from "path";
 import {AppRoutes} from "./routes";
 import {setupPassport, ensureAuthenticated} from "./auth";
 
@@ -13,9 +12,6 @@ import {setupPassport, ensureAuthenticated} from "./auth";
 createConnection().then(async connection => {
 
     let app = express();
-
-    app.use("/", express.static(path.join(__dirname, "build/index.html")));
-    //app.use("/static", express.static(path.join(__dirname, "static")));
 
     app.use(session({
         // CHANGE THE SECRET IN PRODUCTION
